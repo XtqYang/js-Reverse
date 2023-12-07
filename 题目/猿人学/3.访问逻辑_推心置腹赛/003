@@ -1,0 +1,16 @@
+GET /api/match/3?page=1 HTTP/2
+Host: match.yuanrenxue.cn
+Cookie: Hm_lvt_9bcbda9cbf86757998a2339a0437208e=1697609837; Hm_lvt_c99546cf032aaa5a679230de9a95c7db=1697609837; m=38367b6187ca5dd7ee2c16ebec4b0f70|1697615021000; no-alert3=true; tk=-2091757643018393605; sessionid=z1eqajp3e45xpgv6iix4zlmroc1mhflm; Hm_lpvt_9bcbda9cbf86757998a2339a0437208e=1697622303; Hm_lpvt_c99546cf032aaa5a679230de9a95c7db=1697633909
+Sec-Ch-Ua: "Chromium";v="118", "Google Chrome";v="118", "Not=A?Brand";v="99"
+Accept: application/json, text/javascript, */*; q=0.01
+X-Requested-With: XMLHttpRequest
+Sec-Ch-Ua-Mobile: ?0
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36
+Sec-Ch-Ua-Platform: "Windows"
+Sec-Fetch-Site: same-origin
+Sec-Fetch-Mode: cors
+Sec-Fetch-Dest: empty
+Referer: https://match.yuanrenxue.cn/match/3
+Accept-Encoding: gzip, deflate
+Content-Length: 0
+Accept-Language: zh-CN,zh;q=0.9

@@ -1,6 +1,5 @@
 let SANBOX = require('./z_sanbox/qxVm.sanbox');
 
-
 function QXVm_help(){
     console.log(`
 :params js_code          用户自己的代码(可以是一个文件得绝对路径)

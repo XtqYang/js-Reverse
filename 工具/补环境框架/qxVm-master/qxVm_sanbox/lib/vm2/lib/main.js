@@ -839,7 +839,7 @@ class VM extends EventEmitter {
 	}
 
 	/**
-	 * Run the code in VM.
+	 * Run the code in VM.(在VM中运行代码)
 	 *
 	 * @public
 	 * @param {(string|VMScript)} code - Code to run.

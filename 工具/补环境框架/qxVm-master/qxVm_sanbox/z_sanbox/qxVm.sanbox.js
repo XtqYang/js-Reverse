@@ -1,5 +1,18 @@
 const fs = require("fs");
-const { VM, VMScript } = require('../lib/vm2/index');
+const { VM, VMScript } = require('vm2');
+
+
+// var fs = require('fs');
+// const {VM, VMScript} = require('vm2');
+//
+// const codefile = `${__dirname}/code.js`;
+// const vm = new VM();
+// const script = new VMScript(catvm2code + fs.readFileSync(codefile), `${__dirname}/vm2`);
+// // debugger
+// vm.run(script);
+
+
+
 
 const QXVM_NODE = require('./qxVm.env.js');
 const TOOLS = require('../tools/qxVm.sanbox.tools');
@@ -115,7 +128,6 @@ function qxVm_sanbox(js_code, func_name, user_config) {
     let isTest = copy_user_config.pop('isTest') || false;             // 如果测试则固定随机数种子, 时间戳
     let runConfig = initRunConfig(copy_user_config.pop('runConfig'))  // 初始化运行配置
     let user_config_str = configObj_to_configStr(copy_user_config);   // 组装配置字符串(懒得更新)
-
     let qxVm_code = QXVM_NODE.qxVm_env(user_config_str);
     let export_func = `\r\nlwVm_module.exports = { 
     printLog: lwVm.printLog, 
@@ -140,13 +152,13 @@ function qxVm_sanbox(js_code, func_name, user_config) {
             proxy: runConfig.proxy
         }
     };
-    const vm = new VM({ sandbox: { lwVm_module } });
 
+    const vm = new VM({ sandbox: { lwVm_module } });
     const qxVm_env = new VMScript(qxVm_code, `lwVmcode.js`);
     vm.run(qxVm_env);
-
     const script = new VMScript(js_code, `${__dirname}/vmcode.js`);
     return vm.run(script);
+
 }
 
 

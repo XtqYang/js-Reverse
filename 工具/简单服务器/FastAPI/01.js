@@ -6,16 +6,18 @@
 // // 调用函数发送请求
 // sendGetRequest();
 
-function sendGetRequest() {
+
+function sendPostRequest() {
     var xhr = new XMLHttpRequest();
-    dataToSend = _yrxQ9C[9]
-    xhr.open("GET", "http://127.0.0.1:8000/callback?message=" + dataToSend, true);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            console.log(xhr.responseText);
+    xhr.open("POST", "http://127.0.0.1:8000/callback", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify({
+        "message": {
+            "_yrxQ9C": "_yrxQ9C",
+            "_yrxQ9C[9]": "_yrxQ9C[9]",
+            "_yrxQ9C[901]": "_yrxQXc[_yrxQ9C[9]]('div')",
         }
-    };
-    xhr.send();
+    }));
 }
 
-sendGetRequest();
+sendPostRequest();

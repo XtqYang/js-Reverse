@@ -15,7 +15,7 @@ const jscode = fs.readFileSync(
 var ast = parse.parse(jscode);//js转ast
 
 try {
-
+debugger;
     //TODO 1 字符还原
     ast = decry_str(ast)//16进制数字还原与字符还原
 

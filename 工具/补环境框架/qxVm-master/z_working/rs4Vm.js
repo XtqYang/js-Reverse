@@ -8,7 +8,6 @@ function ReadCode() {
     rs_code += fs.readFileSync(`${__dirname}/rs_result.js`) + "\r\n";
     return rs_code
 }
-
 const js_code = ReadCode();
 
 const user_config = {
@@ -21,19 +20,23 @@ const user_config = {
             userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36 Edg/100.0.1185.55"
         },
         location: {
-            href: "https://match.yuanrenxue.cn/match/10/"
+            href: "https://match2023.yuanrenxue.cn/topic/2"
         },
         document: {
-            referrer: "https://match.yuanrenxue.cn/match/10/",
+            referrer: "https://match2023.yuanrenxue.cn/topic/2",
             cookie: "www.fangdi.com_http_ic=www.fangdi.com.cn_80_RS"
         }
     }
 }
 // 帮助信息打印
 // QXVM_GENERATE.help()
-
+// debugger;
 let result = QXVM_GENERATE.sanbox(js_code, "get_run", user_config, false);
 let cookieInfo = result.get_run()
 console.log(cookieInfo)
 //rs代码有问题手动退出
 process.exit()
+//3cea44371baabf58504a6e3278bab835
+//3b89a4761bc98d18d1496e72f9b1b075
+//3b0a5c771baa7f5851ca6872788adf351706370170199
+//3b0a5c771baa7f5851ca6872788adf35

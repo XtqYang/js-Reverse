@@ -6,6 +6,6 @@
 //
 function get_run(url){
     debugger;
-    rs = window.aaa
+    rs = XMLHttpRequest['prototype']['open']()
     return rs;
 }

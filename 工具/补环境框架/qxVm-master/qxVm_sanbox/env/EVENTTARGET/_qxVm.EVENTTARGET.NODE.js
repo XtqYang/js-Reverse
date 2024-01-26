@@ -36,7 +36,11 @@ function Get_eventTarget_node_code() {
     code += ReadCode("VirtualKeyboard.js");
     code += ReadCode("VisualViewport.js");
     code += ReadCode("XRSystem.js");
-    
+
+    code += ReadCode("Blob.js");
+    code += ReadCode("FormData.js");
+    code += ReadCode("URLSearchParams.js");
+
     return code;
 }
 

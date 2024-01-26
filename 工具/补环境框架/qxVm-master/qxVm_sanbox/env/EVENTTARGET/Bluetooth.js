@@ -29,6 +29,7 @@ Bluetooth = function Bluetooth(createObj_key) {
     lwVm.safe_Objattribute(Bluetooth, $safe_get_attribute, $safe_set_attribute, $safe_func_attribute);
 
     Object.setPrototypeOf(Bluetooth.prototype, EventTarget.prototype);
+
     Object.setPrototypeOf(Bluetooth, EventTarget);
 
 })();

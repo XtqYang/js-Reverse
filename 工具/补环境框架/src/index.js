@@ -10,3 +10,4 @@ const vm = new VM();
 const script = new VMScript(catvm2code + fs.readFileSync(codefile), `${__dirname}/vm2`);
 // debugger
 vm.run(script);
+debugger;

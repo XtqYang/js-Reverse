@@ -9,24 +9,20 @@ from jsmin import jsmin
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-
-#  XMLHttpRequest['prototype']['open']()
-
+proxies = {
+    "http": "http://127.0.0.1:8889",
+    "https": "http://127.0.0.1:8889",
+}
+cookies = {
+    'sessionid': 'g8xqgub5skyttf1bouuwm81d2v6rczqa',
+}
 
 def w2ks():
     global yuanrenxue_59
     # 设置代理
-    proxies = {
-        "http": "http://127.0.0.1:8889",
-        "https": "http://127.0.0.1:8889",
-    }
-    cookies = {
-        'sessionid': '7m16j4kqx6n038tnkhise6ea157w46bb',
-    }
     # 请求的URLs
     url1 = "https://match.yuanrenxue.cn/match/10"
     url2 = "https://match.yuanrenxue.cn/stati/mu/rsnkw2ksph"
-
     js_content1 = requests.get(url1, cookies=cookies, verify=False).text
     js_content2 = requests.get(url2, cookies=cookies, verify=False).text
     # 使用正则表达式查找变量yuanrenxue_59的值(密钥)
@@ -77,26 +73,32 @@ def run_js_script_with_args(script_path, *args):
     return result.stdout
 
 
+def replace_js(name1, name2):
+    with open(fr"./rs_replace_js/{name1}", "r", encoding="utf-8") as file:
+        read = file.read()
+    with open(fr"D:\code\pythonProject\逆向\工具\补环境框架\qxVm-master\z_working\{name2}", "w", encoding="utf-8") as file:
+        file.write(read)
+
+
+
 def main(i):
+    #
+    replace_js("rs_result.js","rs_result.js")
+    #
     w2ksph()
     ARGS = run_js_script_with_args(r"D:\code\pythonProject\逆向\工具\补环境框架\qxVm-master\z_working\rs4Vm.js")[49:]
     print(ARGS)
-    cookies2 = {
-        'sessionid': '7m16j4kqx6n038tnkhise6ea157w46bb',
-    }
     params = {
         'page': i,
         'm': ARGS
     }
-    # {"status": "1", "state": "success", "data": [{"value": 304}, {"value": 2207}, {"value": 6182}, {"value": 1548}, {"value": 22}, {"value": 1115}, {"value": 5666}, {"value": 2970}, {"value": 7077}, {"value": 2068}], "k": {"k": "eFDb|311"}}
-    # {"status": "1", "state": "success", "data": [{"value": 304}, {"value": 2207}, {"value": 6182}, {"value": 1548}, {"value": 22}, {"value": 1115}, {"value": 5666}, {"value": 2970}, {"value": 7077}, {"value": 2068}], "k": {"k": "DaAC|131"}}
-    # {"status": "1", "state": "success", "data": [{"value": 5928}, {"value": 6210}, {"value": 1670}, {"value": 8328}, {"value": 3227}, {"value": 5868}, {"value": 5019}, {"value": 9421}, {"value": 469}, {"value": 1153}], "k": {"k": "dcCF|813"}}
-
-    response = requests.get('https://match.yuanrenxue.cn/api/match/10', params=params, cookies=cookies2)
+    response = requests.get('https://match.yuanrenxue.cn/api/match/10', params=params, cookies=cookies)
     return json.loads(response.text)
 
 
 allData = []
+# 4UrkgIwjsrchfAKOC2qRltb4jx0ieHyhXvZItorSg8hL5lGtjcIt_woJEPyvWewABEIiJjuvPYIOUv86BABZmAn1ORMkdXDKad4f27H5gRMkdXiGU1Lz1L_ldd4NyWdqfZxmqk7u2lrDIqQIAgNgjsMBHdwLc_d4xPaZOPKDkdoTYdVssIE2MVoFMllCDycu5PDRRSmwd.Z6Fx8qSIDnP0nekUaYhszgi4eUVclcNhfGA1lCxMzxsLHH7gIhSaH6Gu81qWFVwO4MPNg8lNNBuK.La
+# 4UrkgIwjsrchfAKOC2qRltb4jx0ieHyhXvZItorSg8hL5lGtjcIt_woJEPyvWewABEIiJjuvPYIOUv86BABZmAn1ORMlq7KKSqhm27AcSRMlq7QV29c7m0PStQgyHH3z7jtxFSUqHWvf5hP1Uk2mdlQycFi855ziu9p88Pb0yEffoOEAr8eL5zQPDsEgIcJlRJK5jEjAhe7PUN.ZqZit8m8DoDdiuVORfxudxiH6EGn5_5iF8AGnwV9EqWpiJCa2VZSb4MByiPT0GccpTr33u6Ouy
 
 for i in range(5):
     print(i)

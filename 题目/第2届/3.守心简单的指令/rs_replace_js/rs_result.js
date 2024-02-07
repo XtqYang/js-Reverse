@@ -6,6 +6,6 @@
 //
 function get_run(url){
     debugger;
-    rs = 1
+    rs = window.aaa
     return rs;
 }

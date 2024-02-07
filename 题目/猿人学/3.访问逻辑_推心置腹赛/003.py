@@ -1,6 +1,11 @@
 import json
 
 import requests
+from collections import Counter
+
+import urllib3
+
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 proxies = {
     "http": "127.0.0.1:8080",
@@ -29,7 +34,7 @@ def _jssm():
     }
     session = requests.session()
     session.headers = headers
-    session.post(url=url, proxies=proxies, verify=False)
+    session.post(url=url, verify=False)
 
 
 def _data(i):
@@ -58,11 +63,10 @@ def _data(i):
 
     session = requests.session()
     session.headers = headers_get
-    response = session.get(url=url_get, proxies=proxies, params=params, verify=False)
+    response = session.get(url=url_get, params=params, verify=False)
     return json.loads(response.text)
 
 
-from collections import Counter
 
 
 def most_common_value(data_list):

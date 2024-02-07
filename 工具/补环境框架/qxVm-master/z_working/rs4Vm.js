@@ -30,13 +30,9 @@ const user_config = {
 }
 // 帮助信息打印
 // QXVM_GENERATE.help()
-// debugger;
+debugger;
 let result = QXVM_GENERATE.sanbox(js_code, "get_run", user_config, false);
 let cookieInfo = result.get_run()
 console.log(cookieInfo)
 //rs代码有问题手动退出
 process.exit()
-//3cea44371baabf58504a6e3278bab835
-//3b89a4761bc98d18d1496e72f9b1b075
-//3b0a5c771baa7f5851ca6872788adf351706370170199
-//3b0a5c771baa7f5851ca6872788adf35

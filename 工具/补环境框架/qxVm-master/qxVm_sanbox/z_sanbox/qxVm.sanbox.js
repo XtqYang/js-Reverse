@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { VM, VMScript } = require('vm2');
+const {VM, VMScript} = require('vm2');
 
 
 // var fs = require('fs');
@@ -10,8 +10,6 @@ const { VM, VMScript } = require('vm2');
 // const script = new VMScript(catvm2code + fs.readFileSync(codefile), `${__dirname}/vm2`);
 // // debugger
 // vm.run(script);
-
-
 
 
 const QXVM_NODE = require('./qxVm.env.js');
@@ -58,7 +56,7 @@ function configObj_to_configStr(user_config) {
             description: "",
             filename: "mhjfbmdgcfjbbpaeojofohoefgiehjai",
             name: "Chrome PDF Viewer",
-            MimeTypes: [{ description: "", suffixes: "pdf", type: "application/pdf" }]
+            MimeTypes: [{description: "", suffixes: "pdf", type: "application/pdf"}]
         },
         {
             description: "",
@@ -104,14 +102,14 @@ function configObj_to_configStr(user_config) {
 
 
 /**
- * 
- * @param {Object} runConfig 
+ *
+ * @param {Object} runConfig
  */
-function initRunConfig(runConfig){
-    let defaultConfig = { proxy: false, logOpen: false };
-    for (let key in defaultConfig){
+function initRunConfig(runConfig) {
+    let defaultConfig = {proxy: false, logOpen: false};
+    for (let key in defaultConfig) {
         let value = defaultConfig[key];
-        if (!(key in runConfig)){
+        if (!(key in runConfig)) {
             runConfig[key] = value;
         }
     }
@@ -142,6 +140,7 @@ function qxVm_sanbox(js_code, func_name, user_config) {
     let lwVm_module = {
         exports: {},
         node_func: {
+            process: process,
             setTimeout: setTimeout,
             setInterval: setInterval,
             clearTimeout: clearTimeout,
@@ -153,7 +152,7 @@ function qxVm_sanbox(js_code, func_name, user_config) {
         }
     };
 
-    const vm = new VM({ sandbox: { lwVm_module } });
+    const vm = new VM({sandbox: {lwVm_module}});
     const qxVm_env = new VMScript(qxVm_code, `lwVmcode.js`);
     vm.run(qxVm_env);
     const script = new VMScript(js_code, `${__dirname}/vmcode.js`);

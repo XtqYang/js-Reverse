@@ -873,7 +873,8 @@ Navigation.toString = function() {
                                                     if (o < 137) {
                                                         ye = String.fromCharCode.apply(null, me);
                                                         console.log(ye);
-                                                        if(ye == "toString"){debugger;};
+                                                        if(ye == "toString"){debugger;}
+
                                                         return 65 == j || n.m ? ye : t ? [n[ve], ye] : n[ve][ye]
                                                     } else {
                                                         return i.constructor("F,a", "return new F(" + $.join(",") + ")")(Z, w)

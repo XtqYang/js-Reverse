@@ -20,5 +20,16 @@ def response(flow: http.HTTPFlow) -> None:
         with open("1.js", "r", encoding="utf-8") as file:
             html_content = file.read()
         flow.response.text = html_content
-        print("----------------------++++match2.js+++++++---------------------")
-
+        print("----------------------++++match3.js+++++++---------------------")
+    # if flow.request.pretty_url == "https://lf-c-flwb.bytetos.com/obj/rc-client-security/c-webmssdk/1.0.0.22/webmssdk.js":
+    #     # flow.response.encoding = 'utf-8'
+    #     with open("2.js", "r", encoding="utf-8") as file:
+    #         html_content = file.read()
+    #     flow.response.text = html_content
+    #     print("----------------------++++webmssdk.js+++++++---------------------")
+    # if flow.request.pretty_url == "https://trendinsight.oceanengine.com/api/v2/index/get_portrait":
+    #     # flow.response.encoding = 'utf-8'
+    #     with open("3.js", "r", encoding="utf-8") as file:
+    #         html_content = file.read()
+    #     flow.response.text = html_content
+    #     print("----------------------++++webmssdk.js+++++++---------------------")

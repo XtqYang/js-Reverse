@@ -6,6 +6,7 @@ const {default: generator} = require("@babel/generator");
 var jscode = fs.readFileSync("./code/codes.js", {encoding: "utf-8"});
 // 转换为ast
 
+// 将多维的switch合并为一维的。
 
 function getCaseAll(cases, caseAll = []) {
     if (!types.isSwitchStatement(cases[0].consequent[0])) return cases;

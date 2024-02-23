@@ -4,7 +4,7 @@ const babel = require('@babel/core');
 const generate = require('@babel/generator').default;
 
 
-var jscode = fs.readFileSync("./code/codes.js", {encoding: "utf-8"});
+var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 
 
 
@@ -46,4 +46,4 @@ const result = babel.transform(jscode, {
 });
 
 // 将转换后的代码写入新文件
-fs.writeFileSync("./code/demo.js", result.code, {encoding: "utf-8"});
+fs.writeFileSync("../code/demo.js", result.code, {encoding: "utf-8"});

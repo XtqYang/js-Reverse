@@ -40,7 +40,7 @@ function getCaseJump(map, name, node) {
     let {test, consequent} = node;
     let list = [];
     // 取case最后一个表达式
-    let con = consequent[consequent.length - 2];
+    let con = consequent[consequent.length - 1];
     // 如果是关于o的赋值表达式将返回其值
     let num = getJump(con, name);
     if (num !== undefined) {

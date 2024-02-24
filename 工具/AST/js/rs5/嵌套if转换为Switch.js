@@ -91,12 +91,14 @@ function if_to_Switch(a, b) {
             aaa++;
             // 类型过虑
             if (path.node.test.type !== "BinaryExpression") return;
-            if (path.node.test.right.type !== "NumericLiteral") return;
+            // if (path.node.test.right.type !== "NumericLiteral") return;
             //
             if (path.node.test.expressions) return;
             if (path.node.test.operator === null) return;
-            if (path.node.test.operator !== "<") return;
-
+            if (path.node.test.operator === "==") {
+            } else {
+                if (path.node.test.operator !== "<") return;
+            }
 
             const astNode = path.node;
             const {code} = generate(astNode);
@@ -123,11 +125,9 @@ function if_to_Switch(a, b) {
             }
         }]
     });
-
     // 写入新的文件
     // fs.writeFileSync("../code/demo.js", result.code, {encoding: "utf-8"});
     return result.code;
-
 }
 
 if_to_Switch()

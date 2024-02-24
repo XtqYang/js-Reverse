@@ -1,7 +1,8 @@
-Navigation = function () {};
+/*Navigation = function () {};
 Navigation.toString = function () {
   return 'function Navigation() { [native code] }';
-};
+};*/
+/*debugger;*/
 (function (e) {
   var i = e || 2;
   for (;;) switch (i) {
@@ -391,6 +392,7 @@ Navigation.toString = function () {
             o = 134;
             break;
           case 96:
+            /*debugger;*/
             if (this.constructor != i) {
               o = 122;
             } else {
@@ -443,6 +445,7 @@ Navigation.toString = function () {
             break;
           case 107:
             y = new i.g();
+            /*debugger;*/
             o = 176;
             break;
           case 108:

@@ -18,7 +18,7 @@ estraverse.replace(ast, {
             ternaryExpressionCount++;
 
             // 只处理第5到第10个三元表达式节点
-            if (ternaryExpressionCount <= 1) {
+            if (ternaryExpressionCount <= 100) {
                 // 构建对应的if-else语
                 const ifStatement = {
                     type: 'IfStatement',

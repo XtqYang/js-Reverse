@@ -1,14 +1,12 @@
 const parser = require('@babel/parser');
 const traverse = require('@babel/traverse').default;
 const generator = require('@babel/generator').default;
-
-// 原始代码
-const code = ` if (59 == j) {
-    (we = i(l, C++, (m = i(l, C, -3), C = m.i, m.n), n, !0), Fe = i(l, C++, (m = i(l, C, -3), C = m.i, m.n), n), we instanceof i.constructor ? i.apply.call(we, n[0].n, Fe) : (be = we[0][we[1]], we[0] instanceof i.g ? i.apply.call(be, n.n, Fe) : i.apply.call(be, we[0], Fe)));
-  } `;
+const fs = require('fs');
+// 读取js文件
+var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 
 // 使用Babel解析器解析代码
-const ast = parser.parse(code);
+const ast = parser.parse(jscode);
 
 // 遍历AST节点
 traverse(ast, {
@@ -26,6 +24,7 @@ traverse(ast, {
 });
 
 // 生成修改后的代码
-const output = generator(ast, {}, code);
+const output = generator(ast, {}, jscode);
 
-console.log(output.code);
+// 写入新的 JavaScript 文件
+fs.writeFileSync("../code/demo.js", output.code, {encoding: "utf-8"});

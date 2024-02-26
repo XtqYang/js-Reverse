@@ -11,14 +11,22 @@ const ast = acorn.parse(jscode, {ecmaVersion: 2020});
 // 遍历AST并修改
 estraverse.replace(ast, {
     enter: function (node, parent) {
-        if (node.type === 'ReturnStatement' && node.argument != null) { // 添加了对 node.argument 的空值检查
+        if (node.type === 'ReturnStatement' && node.argument != null && node.argument.type === 'SequenceExpression') { // 检查是否为SequenceExpression
             const expressions = node.argument.expressions;
-            if (expressions && expressions.length > 1) {
+            if (expressions.length > 1) {
                 const lastExpression = expressions.pop(); // 移除并保留最后一个表达式
-                parent.body = expressions.map(expr => ({
+                const expressionStatements = expressions.map(expr => ({
                     type: 'ExpressionStatement',
                     expression: expr
-                })).concat(parent.body); // 将移除的表达式作为新的语句添加到return前
+                }));
+                if (parent.type === 'BlockStatement') {
+                    // 将移除的表达式作为新的语句添加到return前
+                    parent.body = [...expressionStatements, ...parent.body];
+                } else if (parent.type === 'SwitchCase') {
+                    // 如果父节点是SwitchCase，需要处理不同的结构
+                    const returnIndex = parent.consequent.indexOf(node);
+                    parent.consequent.splice(returnIndex, 0, ...expressionStatements);
+                }
                 node.argument = lastExpression; // 将return语句的参数设置为原来的最后一个表达式
             }
         }

@@ -6,7 +6,7 @@ var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 const ast = acorn.parse(jscode, { ecmaVersion: 2020 });
 
 // 这部分代码执行完成后需要将返回的代码放入 表达式前添加return.js 进行下一步添加return操作否则代码逻辑是错误的
-// 注意：与拆分逗号表达式为;.js组合使用
+// 注意:与拆分逗号表达式为;.js组合使用
 let ternaryExpressionCount = 0;
 
 // 使用estraverse遍历AST

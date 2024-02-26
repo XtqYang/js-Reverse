@@ -5,7 +5,6 @@ const fs = require("fs");
 
 var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 
-// 解析代码到AST
 const ast = acorn.parse(jscode, {ecmaVersion: 2020});
 
 // 遍历AST并修改
@@ -33,7 +32,6 @@ estraverse.replace(ast, {
     }
 });
 
-// 从修改后的AST生成代码
 const modifiedCode = astring.generate(ast);
 
 fs.writeFileSync("../code/demo.js", modifiedCode, {encoding: "utf-8"});

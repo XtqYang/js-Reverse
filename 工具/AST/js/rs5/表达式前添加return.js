@@ -15,24 +15,26 @@ estraverse.traverse(ast, {
     enter: function (node, parent) {
         if (node.type === 'IfStatement') {
             // 检查 if 和 else if 块
-            [node.consequent, node.alternate].forEach(block => {
+            const blocks = [node.consequent];
+            if (node.alternate && node.alternate.type !== 'IfStatement') {
+                blocks.push(node.alternate);
+            }
+
+            blocks.forEach(block => {
                 if (block && block.type === 'BlockStatement' && block.body.length > 0) {
-                    // 获取第一个语句
-                    const firstStatement = block.body[0];
-                    if (firstStatement.type === 'ExpressionStatement') {
-                        // 检查是否为 SequenceExpression 或其他不需要添加 return 的情况
-                        if (firstStatement.expression.type !== 'SequenceExpression') {
-                            // 不是 SequenceExpression，检查是否需要跳过添加 return
-                            // 如果不需要跳过，执行添加 return 的逻辑
-                            // 创建一个返回语句，其返回值为原先的表达式
+                    // 获取最后一个语句
+                    const lastStatement = block.body[block.body.length - 1];
+                    // 对于非 IfStatement 的最后一个语句，添加 return
+                    if (lastStatement.type !== 'IfStatement') {
+                        // 创建一个返回语句，其返回值为原先的表达式（如果是表达式语句的话）
+                        if (lastStatement.type === 'ExpressionStatement') {
                             const returnStatement = {
                                 type: 'ReturnStatement',
-                                argument: firstStatement.expression
+                                argument: lastStatement.expression
                             };
                             // 用新的 return 语句替换原先的表达式语句
-                            block.body[0] = returnStatement;
+                            block.body[block.body.length - 1] = returnStatement;
                         }
-                        // 如果是 SequenceExpression 或其他特定情况，不添加 return，直接跳过
                     }
                 }
             });

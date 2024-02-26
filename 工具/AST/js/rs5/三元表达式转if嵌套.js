@@ -6,7 +6,7 @@ var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 const ast = acorn.parse(jscode, { ecmaVersion: 2020 });
 
 // 这部分代码执行完成后需要将返回的代码放入 表达式前添加return.js 进行下一步添加return操作否则代码逻辑是错误的
-// 注意：若深度遍历需要手动处理, if这种情况
+// 注意：与拆分逗号表达式为;.js组合使用
 let ternaryExpressionCount = 0;
 
 // 使用estraverse遍历AST
@@ -17,7 +17,7 @@ estraverse.replace(ast, {
             // 递增三元表达式计数器
             ternaryExpressionCount++;
 
-            // 只处理第5到第10个三元表达式节点
+            // 1  100
             if (ternaryExpressionCount <= 100) {
                 // 构建对应的if-else语
                 const ifStatement = {

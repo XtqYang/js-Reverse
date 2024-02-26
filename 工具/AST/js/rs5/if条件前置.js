@@ -1,12 +1,8 @@
 var types = require("@babel/types");
 const fs = require('fs');
 const babel = require('@babel/core');
-const generate = require('@babel/generator').default;
-
 
 var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
-
-
 
 const if_disambiguation = {
     IfStatement(path) {

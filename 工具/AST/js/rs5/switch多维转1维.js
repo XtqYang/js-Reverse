@@ -61,8 +61,8 @@ function Switch_merge(path, code) {
     return result.code
 }
 
-// let switchMerge = Switch_merge("codes.js");
+let switchMerge = Switch_merge("codes.js");
 // 写入新的文件
-// fs.writeFileSync("../code/demo.js", switchMerge, {encoding: "utf-8"});
+fs.writeFileSync("../code/demo.js", switchMerge, {encoding: "utf-8"});
 
 module.exports = {Switch_merge};

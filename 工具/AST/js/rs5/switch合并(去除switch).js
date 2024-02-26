@@ -1,10 +1,9 @@
 var types = require("@babel/types");
-const fs = require("fs");
 const babel = require('@babel/core');
 const {default: generator} = require("@babel/generator");
 const generate = require('@babel/generator').default;
 
-// 读取js文件
+const fs = require("fs");
 var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 
 

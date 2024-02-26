@@ -16,7 +16,6 @@ traverse(ast, {
         type: 'ExpressionStatement',
         expression,
       }));
-
       path.replaceWithMultiple(expressions);
       path.skip(); // 跳过替换后的节点，防止无限递归
     }

@@ -1,33 +1,17 @@
-
 const acorn = require('acorn');
 const estraverse = require('estraverse');
 const astring = require('astring');
+const fs = require("fs");
 
-// 初始代码
-const code = `
-function f() {
-    if (59 == j) {
-        return we = i(l, C++, !0),
-            Fe = i(l, C++, n), 
-            we instanceof i.constructor
-                ? i.apply.call(we, n[0].n, Fe)
-                : (
-                    be = we[0][we[1]],
-                        we[0] instanceof i.g ?
-                            i.apply.call(be, n.n, Fe) 
-                            : i.apply.call(be, we[0], Fe));
-    }
-}
-
-`;
+var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 
 // 解析代码到AST
-const ast = acorn.parse(code, {ecmaVersion: 2020});
+const ast = acorn.parse(jscode, {ecmaVersion: 2020});
 
 // 遍历AST并修改
 estraverse.replace(ast, {
     enter: function (node, parent) {
-        if (node.type === 'ReturnStatement') {
+        if (node.type === 'ReturnStatement' && node.argument != null) { // 添加了对 node.argument 的空值检查
             const expressions = node.argument.expressions;
             if (expressions && expressions.length > 1) {
                 const lastExpression = expressions.pop(); // 移除并保留最后一个表达式
@@ -44,4 +28,4 @@ estraverse.replace(ast, {
 // 从修改后的AST生成代码
 const modifiedCode = astring.generate(ast);
 
-console.log(modifiedCode);
+fs.writeFileSync("../code/demo.js", modifiedCode, {encoding: "utf-8"});

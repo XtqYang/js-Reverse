@@ -103,8 +103,10 @@ function if_to_Switch(a, b) {
             const astNode = path.node;
             const {code} = generate(astNode);
             console.log(generate(path.node.test).code)
-
-            if (aaa > a && aaa < b) {
+            // 确保a和b有默认值
+            a = a || 0;
+            b = b || 999;
+            if (a < aaa && aaa < b) {
                 console.log(aaa)
                 let newNode = ifToSwitchNode(path);
                 path.replaceWith(newNode);
@@ -126,8 +128,8 @@ function if_to_Switch(a, b) {
         }]
     });
     // 写入新的文件
-    // fs.writeFileSync("../code/demo.js", result.code, {encoding: "utf-8"});
-    return result.code;
+    fs.writeFileSync("../code/demo.js", result.code, {encoding: "utf-8"});
+    // return result.code;
 }
 
 if_to_Switch()

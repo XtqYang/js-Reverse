@@ -23,22 +23,27 @@ traverse(ast, {
       const consequent = argument.node.consequent;
       const alternate = argument.node.alternate;
 
+      // 对于consequent分支，始终使用return语句
+      const consequentStatement = t.returnStatement(consequent);
+
       let alternateStatements = [];
       // 检查alternate是否为序列表达式
       if (t.isSequenceExpression(alternate)) {
-        // 如果是序列表达式，处理每个表达式
-        alternate.expressions.forEach(expression => {
+        // 如果是序列表达式，处理每个表达式，除最后一个外
+        alternate.expressions.slice(0, -1).forEach(expression => {
           alternateStatements.push(t.expressionStatement(expression));
         });
+        // 最后一个表达式使用return语句返回
+        alternateStatements.push(t.returnStatement(alternate.expressions[alternate.expressions.length - 1]));
       } else {
-        // 如果不是序列表达式，直接使用alternate
+        // 如果不是序列表达式，直接使用return语句返回alternate
         alternateStatements.push(t.returnStatement(alternate));
       }
 
       // 创建一个新的IfStatement节点
       const ifStatement = t.ifStatement(
         test,
-        t.blockStatement([t.returnStatement(consequent)]),
+        t.blockStatement([consequentStatement]),
         t.blockStatement(alternateStatements)
       );
 

@@ -1,57 +1,59 @@
-const parser = require('@babel/parser');
-const traverse = require('@babel/traverse').default;
-const types = require('@babel/types');
-const generate = require('@babel/generator').default;
-const fs = require('fs');
-// 读取js文件
+const acorn = require('acorn');
+const estraverse = require('estraverse');
+const escodegen = require('escodegen');
+
+const fs = require("fs");
 var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 
 
 // 解析代码为AST
-const ast = parser.parse(jscode, {
-  sourceType: "module",
-  plugins: []
+const ast = acorn.parse(jscode, { ecmaVersion: 2020 });
+
+// 遍历AST并修改
+estraverse.replace(ast, {
+    enter: function (node) {
+        if (node.type === 'SwitchStatement') {
+            node.cases.forEach(caseNode => {
+                const consequent = caseNode.consequent;
+                const lastStatement = consequent.find(statement =>
+                    statement.type === 'ExpressionStatement' &&
+                    statement.expression.type === 'AssignmentExpression' &&
+                    statement.expression.left.type === 'Identifier' &&
+                    statement.expression.left.name === 'o'
+                );
+
+                if (lastStatement) {
+                    const operation = lastStatement.expression.operator;
+                    const value = lastStatement.expression.right.value;
+
+                    // 根据操作类型计算新值
+                    let newValue;
+                    switch (operation) {
+                        case '-=':
+                            newValue = caseNode.test.value - value;
+                            break;
+                        case '+=':
+                            newValue = caseNode.test.value + value;
+                            break;
+                        default:
+                            // 如果不是加法或减法操作，则直接使用原始值
+                            newValue = value;
+                            break;
+                    }
+
+                    // 更新为直接赋值操作
+                    lastStatement.expression.operator = '=';
+                    lastStatement.expression.right = {
+                        type: 'Literal',
+                        value: newValue,
+                        raw: String(newValue)
+                    };
+                }
+            });
+        }
+    }
 });
 
-const updateAssignment = {
-  AssignmentExpression(path) {
-    // 检查是否为+=操作符
-    if (path.node.operator === '+=') {
-      // 获取左侧和右侧的节点
-      const left = path.node.left;
-      const right = path.node.right;
-
-      // 查找当前路径的父SwitchCase节点
-      const switchCase = path.findParent((p) => p.isSwitchCase());
-      if (switchCase && types.isNumericLiteral(switchCase.node.test)) {
-        const caseValue = switchCase.node.test.value;
-
-        // 根据case的值调整右侧的值
-        let adjustedValue;
-        if (types.isNumericLiteral(right)) {
-          adjustedValue = types.numericLiteral(caseValue + right.value);
-        } else {
-          // 如果右侧不是数字字面量，这里需要更复杂的逻辑来处理
-          console.warn("Right side of the assignment is not a numeric literal.");
-          return;
-        }
-
-        // 创建新的赋值表达式节点
-        const newAssignment = types.assignmentExpression("=", left, adjustedValue);
-
-        // 用新节点替换旧节点
-        path.replaceWith(newAssignment);
-      }
-    }
-  }
-};
-
-// 使用traverse遍历和更新AST
-traverse(ast, updateAssignment);
-
-// 将AST转换回代码
-const { code } = generate(ast, {});
-
-// 写入新的文件，如果需要
-// 写入新的 JavaScript 文件
-fs.writeFileSync("../code/demo.js", code, {encoding: "utf-8"});
+// 从修改后的AST生成新代码
+const newCode = escodegen.generate(ast);
+fs.writeFileSync("../code/demo.js", newCode, {encoding: "utf-8"});

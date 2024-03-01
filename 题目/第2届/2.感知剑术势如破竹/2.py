@@ -50,7 +50,6 @@ def main(i):
         'page': str(i),
         'token': ARGS,
     }
-
     def send_post_request(url, headers=None, proxies=None, params=None, cookie=None):
         """
         发送POST请求。
@@ -80,7 +79,6 @@ def main(i):
         # 发送POST请求
         response = session.post(url=url, verify=False)
         return response
-
     response = send_post_request(url, headers=headers, proxies=None, params=params, cookie=cookie)
     return json.loads(response.text)
 

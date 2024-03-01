@@ -7,6 +7,9 @@ const fs = require("fs");
 var jscode = fs.readFileSync("../code/codes.js", {encoding: "utf-8"});
 
 
+//正则搜索需要手动修改路径 if\s*\((.*?)\)\s*\{\s*o\s*-\=\s*\d{0,4}\s*;\s*\}\s*else\s*\{\s*o\s*=\s*\d{0,4}\s*;\s*\}
+
+
 /**
  * 判断节点类型不符合指定类型直接返回空
  * @param node case里面的一个赋值表达式
@@ -193,47 +196,3 @@ const result = babel.transform(jscode, {
 
 // 写入新的文件
 fs.writeFileSync("../code/demo.js", result.code, {encoding: "utf-8"});
-
-// (function i(l, s, f, n, t, r, a, u) {
-//     var o = e || 5;
-//     for (; ;) {
-//         switch (o) {
-//             case 7:
-//                 K++;
-//                 o = 10;
-//                 break;
-//             case 8:
-//                 return 18;
-//             case 9:
-//                 o = 7;
-//                 break;
-//             case 10:
-//                 if (C = s || 0, p = f || l.length, j = l[C++], m = i(l, C, -2), C = m.i, m.n, x = 0, 13 == j || 48 == j ? x = 1 : 49 == j ? x = 2 : 23 == j && (x = 3), 13 == j || 48 == j || 49 == j || 23 == j) {
-//                     o = 8;
-//                 } else {
-//                     o = 8;
-//                 }
-//                 break;
-//             case 5:
-//                 v.v = !1;
-//                 o = 9;
-//                 break;
-//         }
-//     }
-// })([99, 116, 105, 118, 101]);
-
-
-////(function i(l, s, f, n, t, r, a, u) {
-// //     var o = e || 5;
-// //     v.v = !1;
-// //     o = 9;
-// //     o = 7;
-// //     K++;
-// //     o = 10;
-// //     if (C = s || 0, p = f || l.length, j = l[C++], m = i(l, C, -2), C = m.i, m.n, x = 0, 13 == j || 48 == j ? x = 1 : 49 == j ? x = 2 : 23 == j && (x = 3), 13 == j || 48 == j || 49 == j || 23 == j) {
-// //         o = 8;
-// //     } else {
-// //         o = 8;
-// //     }
-// //     return 18;
-// // })([99, 116, 105, 118, 101]);

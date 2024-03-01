@@ -26,31 +26,23 @@ async def handle_get(request: Request):
     decoded_data = unquote(encoded_data)
     # 处理数据
     process_data(decoded_data)
-    return {"message": f"数据 '{decoded_data}' 已存储到文件中"}
+    return "get请求成功"
 
 
 @app.post("/callback")
 async def handle_post(request: Request):
     # 从请求体中获取 JSON 数据
     json_data = await request.json()
-    # 假设 JSON 数据是以键 'message' 发送的
-    encoded_data = json_data.get("message", {})
-    # 确保 encoded_data 是一个字典
-    if not isinstance(encoded_data, dict):
-        encoded_data = {}
-    # 将字典转换为 JSON 字符串
-    decoded_data = json.dumps(encoded_data)
-    # 处理数据
-    process_data(decoded_data)
-    return {"message": f"数据 '{decoded_data}' 已存储到文件中"}
+    process_data(json_data['message'])
+    return "post请求成功"
 
 
 def process_data(data):
-    # 在日志中记录收到的数据
-    logging.info(f"收到的数据为: {data}")
-    # 将数据存储到文件
+    # 将数据转换为 JSON 格式的字符串
+    data_str = json.dumps(data)
+    # 将转换后的字符串写入文件
     with open("data.js", "a") as file:
-        file.write("a = "+data + "\n")
+        file.write("a = " + data_str + "\n")
 
 
 if __name__ == "__main__":
